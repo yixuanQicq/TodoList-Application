@@ -30,14 +30,14 @@ public class TodoList {
                 addItem();
             }
             if (operation.equals("2")){
-                displayList("Todo List: ",todoList);
+                displayList("Todo: ",todoList);
                 System.out.println("Which item would you like to cross off?");
                 crossedOffItem();
                 System.out.println("your item has been crossed off!");
             }
             if (operation.equals("3")){
-                displayList("Todo List: ",todoList);
-                displayList("Crossed Off List: ",crossedOffList);
+                displayList("Todo: ",todoList);
+                displayList("Crossed-off: ",crossedOffList);
             }
             else if (operation.equals("4")){
                 run = quit();
