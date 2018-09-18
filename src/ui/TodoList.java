@@ -6,11 +6,11 @@ import java.util.Scanner;
 
 
 public class TodoList {
-    Boolean run  = true;
-    Scanner scanner = new Scanner(System.in);
+    private Boolean run  = true;
+    private Scanner scanner = new Scanner(System.in);
 
-    ArrayList<String> todoList;
-    ArrayList<String> crossedOffList;
+    private ArrayList<String> todoList;
+    private ArrayList<String> crossedOffList;
 
     public TodoList(){
         todoList = new ArrayList<>();
