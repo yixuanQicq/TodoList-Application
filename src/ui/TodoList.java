@@ -6,12 +6,15 @@ import java.util.Scanner;
 
 
 public class TodoList {
-    ArrayList<String> todoList = new ArrayList<>();
-    ArrayList<String> crossedOffList = new ArrayList<>();
+    Boolean run  = true;
     Scanner scanner = new Scanner(System.in);
-    Boolean run =  true;
+
+    ArrayList<String> todoList;
+    ArrayList<String> crossedOffList;
 
     public TodoList(){
+        todoList = new ArrayList<>();
+        crossedOffList = new ArrayList<>();
         String operation = "";
         while (run) {
             System.out.println("Please select an option: " +
@@ -43,16 +46,16 @@ public class TodoList {
         System.out.println("Thank You for using Todo List");
     }
 
-    private Boolean quit() {
+    public Boolean quit() {
         return false;
     }
 
-    private void addItem(){
+    public void addItem(){
         String newitem = scanner.nextLine();
         todoList.add(newitem);
     }
 
-    private void crossedOffItem(){
+    public void crossedOffItem(){
         int itemIndex = scanner.nextInt();
         String item = todoList.get(itemIndex);
         scanner.nextLine();
@@ -60,7 +63,7 @@ public class TodoList {
         todoList.remove(itemIndex);
     }
     
-    private void displayList(String prompt, List<String> lst){
+    public void displayList(String prompt, List<String> lst){
         for (String s: lst) {
             System.out.println(prompt+ "[" + lst.indexOf(s) + "]" + s);
         }
