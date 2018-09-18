@@ -61,7 +61,6 @@ public class TodoList {
     }
     
     private void displayList(String prompt, List<String> lst){
-        //System.out.println(prompt);
         for (String s: lst) {
             System.out.println(prompt+ "[" + lst.indexOf(s) + "]" + s);
         }
