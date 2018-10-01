@@ -1,13 +1,16 @@
 package model;
 
-
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class TodoList {
+public class TodoList implements Loadable, Saveable {
     private ArrayList<Item> todoList;
-
-    private Scanner scanner = new Scanner(System.in);
     private Date currentDate = new Date();
     private User user = new User();
 
@@ -33,44 +36,17 @@ public class TodoList {
         }
     }
 
-    // EFFECTS: print out todolist
-    public void displayList(){
-        System.out.println("TODO-LIST:");
-        for (Item s: todoList) {
-            System.out.println("[" + todoList.indexOf(s) + "]:  " + s.getName()+ " --  Status: "+s.getStatus());
-        }
-        System.out.println("-----------------------------------------------" +
-                "-----------------------------------------------");
-
-    }
-
     // MODIFIES: Item
     // EFFECTS: set the status of the item to overdue
-    public void checkOverDue() {
+    public void checkOverDue() throws ParseException {
         for (Item i: todoList){
-            if (i.getDueDate().before(currentDate)){
+            DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
+            Date date = format.parse(i.getDueDate());
+            if (date.before(currentDate)){
                 if(!(i.getStatus().equals("Done"))){
                     i.setStatus("Overdue");
                 }
             }
-        }
-    }
-
-    // EFFECTS: print out list of over due items
-    public void printOverDue(){
-        ArrayList<Item> overDue = new ArrayList<>();
-        for (Item i: todoList){
-            if((i.getStatus().equals("Overdue"))){
-                overDue.add(i);
-            }
-        }
-        if (overDue.size() > 0){
-            System.out.println("OVER DUE ITEMS: ");
-            for (Item i: overDue){
-                System.out.println(i.getName() + "-- Due: "+ i.getDueDate());
-            }
-            System.out.println("-----------------------------------------------" +
-                    "-----------------------------------------------");
         }
     }
 
@@ -100,6 +76,54 @@ public class TodoList {
         return todoList.get(i);
     }
 
+    public ArrayList<Item> getTodoList() {
+        return todoList;
+    }
 
+    // REQUIRES: input file name to exist
+    // MODIFIES: this
+    // EFFECTS: print in todolist item in file
+    @Override
+    public void save(String fileName) throws IOException {
+        List<String> lines = Files.readAllLines(Paths.get(fileName));
+        List<String> newLines = new ArrayList<>();
+        PrintWriter writer = new PrintWriter("src/savefile.txt","UTF-8");
+            for (Item item: todoList) {
+                newLines.add(item.getName() + " : " + item.getStatus() + " : " + item.getDueDate());
+            }
+            for (String line : newLines){
+                if (!lines.contains(line)) {
+                    writer.println(line);
+                }
+            }
+        writer.close();
+    }
+
+    // REQUIRES: input file name to exist
+    // EFFECTS: print file items into todolist
+    @Override
+    public void load(String fileName) throws IOException {
+        List<String> lines = Files.readAllLines(Paths.get(fileName));
+        for (String line: lines) {
+            ArrayList<String> partsOfLine = splitOnSpace(line);
+            todoList.add(new Item(partsOfLine.get(0),partsOfLine.get(1), partsOfLine.get(2)));
+        }
+    }
+
+    // EFFECTS: split ArraryList<String>
+    private static ArrayList<String> splitOnSpace(String line){
+        String[] splits = line.split(" : ");
+        return new ArrayList<>(Arrays.asList(splits));
+    }
+
+    // REQUIRES: input file name to exist
+    // MODIFIES: this
+    // EFFECTS: empty input file
+    @Override
+    public void emptyFile(String fileName) throws IOException {
+        PrintWriter writer = new PrintWriter(fileName,"UTF-8");
+        writer.print("");
+        writer.close();
+    }
 
 }

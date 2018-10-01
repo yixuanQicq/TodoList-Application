@@ -18,20 +18,20 @@ import java.util.Locale;
 public class TestTodoList {
     TodoList testTodoList;
     private Item testItem1;
-    private Date testDate1;
+    private String testDate1;
     private String testName1;
     private Item testItem2;
-    private Date testDate2;
+    private String testDate2;
     private String testName2;
 
     @BeforeEach
     void setUp() throws ParseException {
         testTodoList = new TodoList();
         DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
-        testDate1 = format.parse("JUNE 8, 2017");
+        testDate1 = "JUNE 8, 2017";
         testName1 = "CPSC210 Lecture ticket";
         testItem1 = new Item(testName1, testDate1);
-        testDate2 = format.parse("JULY 30, 2019");
+        testDate2 = "JULY 30, 2019";
         testName2 = "CPSC121 Lecture ticket";
         testItem2 = new Item(testName2, testDate2);
     }
@@ -46,7 +46,7 @@ public class TestTodoList {
     @Test
     void testCrossOff() throws ParseException {
         testTodoList.addItem(testItem1);
-        assertEquals("in progress",testTodoList.getItem(0).getStatus());
+        assertEquals("In-progress",testTodoList.getItem(0).getStatus());
         testTodoList.crossedOffItem(0);
         assertEquals("Done",testTodoList.getItem(0).getStatus());
     }
@@ -54,20 +54,20 @@ public class TestTodoList {
     @Test
     void tesCrossOffInvalidIndex() throws ParseException {
         testTodoList.addItem(testItem1);
-        assertEquals("in progress",testTodoList.getItem(0).getStatus());
+        assertEquals("In-progress",testTodoList.getItem(0).getStatus());
         testTodoList.crossedOffItem(8);
-        assertEquals("in progress",testTodoList.getItem(0).getStatus());
+        assertEquals("In-progress",testTodoList.getItem(0).getStatus());
     }
 
     @Test
     void testCheckOverDueOneItemOverDue() throws ParseException {
         testTodoList.addItem(testItem1);
         testTodoList.addItem(testItem2);
-        assertEquals("in progress",testTodoList.getItem(0).getStatus());
-        assertEquals("in progress",testTodoList.getItem(1).getStatus());
+        assertEquals("In-progress",testTodoList.getItem(0).getStatus());
+        assertEquals("In-progress",testTodoList.getItem(1).getStatus());
         testTodoList.checkOverDue();
         assertEquals("Overdue",testTodoList.getItem(0).getStatus());
-        assertEquals("in progress",testTodoList.getItem(1).getStatus());
+        assertEquals("In-progress",testTodoList.getItem(1).getStatus());
     }
 
     @Test
@@ -76,10 +76,10 @@ public class TestTodoList {
         testTodoList.addItem(testItem2);
         testTodoList.crossedOffItem(0);
         assertEquals("Done",testTodoList.getItem(0).getStatus());
-        assertEquals("in progress",testTodoList.getItem(1).getStatus());
+        assertEquals("In-progress",testTodoList.getItem(1).getStatus());
         testTodoList.checkOverDue();
         assertEquals("Done",testTodoList.getItem(0).getStatus());
-        assertEquals("in progress",testTodoList.getItem(1).getStatus());
+        assertEquals("In-progress",testTodoList.getItem(1).getStatus());
     }
 
     @Test
@@ -95,9 +95,6 @@ public class TestTodoList {
         assertFalse(testTodoList.checkPasswords(0000));
         assertTrue(testTodoList.checkPasswords(1234));
     }
-
-
-
 
 
 

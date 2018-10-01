@@ -4,32 +4,25 @@ import model.Item;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestItem {
     private Item testItem;
-    private Date testDate;
+    private String testDate;
     private String testName;
 
     @BeforeEach
-    void setUp() throws ParseException {
-        DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
-        testDate = format.parse("JUNE 8, 2017");
+    void setUp(){
+        testDate = "JUNE 8, 2017";
         testName = "CPSC210 Lecture ticket";
         testItem = new Item(testName, testDate);
     }
 
     @Test
-    void testConstructor() throws ParseException {
+    void testConstructor(){
         assertEquals(testName, testItem.getName());
         assertEquals(testDate, testItem.getDueDate());
-        assertEquals("in progress", testItem.getStatus());
+        assertEquals("In-progress", testItem.getStatus());
     }
 
     @Test
@@ -40,10 +33,9 @@ public class TestItem {
     }
 
     @Test
-    void testsetDate() throws ParseException {
+    void testsetDate() {
         assertEquals(testDate, testItem.getDueDate());
-        DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
-        Date newDate = format.parse("JUNE 10, 2017");
+        String newDate = "JUNE 10, 2017";
         testItem.setDueDate(newDate);
 
         assertEquals(newDate, testItem.getDueDate());
@@ -51,7 +43,7 @@ public class TestItem {
 
     @Test
     void testsetStatus(){
-        assertEquals("in progress", testItem.getStatus());
+        assertEquals("In-progress", testItem.getStatus());
         testItem.setStatus("done");
         assertEquals("done", testItem.getStatus());
     }

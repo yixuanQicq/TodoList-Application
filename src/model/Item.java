@@ -6,12 +6,18 @@ public class Item {
 
     private String name;
     private String  status;
-    private Date dueDate;
+    private String dueDate;
 
-    public Item (String name, Date dueDate){
+    public Item (String name, String dueDate){
         this.name = name;
         this.dueDate = dueDate;
-        status = "in progress";
+        status = "In-progress";
+    }
+
+    public Item (String name, String status, String dueDate){
+        this.name = name;
+        this.status = status;
+        this.dueDate = dueDate;
     }
 
     // EFFECTS: return the name of the item
@@ -20,7 +26,7 @@ public class Item {
     }
 
     // EFFECTS: return dueDate of the item
-    public Date getDueDate() {
+    public String getDueDate() {
         return dueDate;
     }
 
@@ -44,7 +50,7 @@ public class Item {
 
     // MODIFIES: this
     // EFFECTS: change the status of the item
-    public void setDueDate(Date dueDate) {
+    public void setDueDate(String dueDate) {
         this.dueDate = dueDate;
     }
 }
