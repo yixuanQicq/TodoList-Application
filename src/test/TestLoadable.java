@@ -21,7 +21,10 @@ public class TestLoadable {
     void testLoadFromFile() throws IOException {
         assertEquals(0,todo.size());
         todo.load("src/testLoad");
-        assertEquals(1,todo.size());
+        assertEquals(3,todo.size());
         assertEquals("AAAAA",todo.getItem(0).getName());
+        assertEquals("BBBBB",todo.getItem(1).getName());
+        assertEquals("CCCCC",todo.getItem(2).getName());
+
     }
 }
