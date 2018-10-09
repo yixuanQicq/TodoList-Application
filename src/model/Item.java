@@ -1,20 +1,17 @@
 package model;
 
-import java.util.Date;
+public abstract class Item {
+    protected String name;
+    protected String  status;
+    protected String dueDate;
 
-public class Item {
-
-    private String name;
-    private String  status;
-    private String dueDate;
-
-    public Item (String name, String dueDate){
+    public Item(String name, String dueDate){
         this.name = name;
         this.dueDate = dueDate;
         status = "In-progress";
     }
 
-    public Item (String name, String status, String dueDate){
+    public Item(String name, String status, String dueDate){
         this.name = name;
         this.status = status;
         this.dueDate = dueDate;
@@ -53,4 +50,10 @@ public class Item {
     public void setDueDate(String dueDate) {
         this.dueDate = dueDate;
     }
+
+    // EFFECTS: return item type as string
+    public abstract String getItemType();
+
+
+
 }

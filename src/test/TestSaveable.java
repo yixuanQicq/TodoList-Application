@@ -1,6 +1,7 @@
 package test;
 
-import model.Item;
+import model.BusinessItem;
+import model.RegularItem;
 import model.TodoList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,8 +25,8 @@ public class TestSaveable {
     void testSave() throws IOException, ParseException {
         todo.load("src/testSave");
         assertEquals(0, todo.size());
-        todo.addItem(new Item("BBBBB", "OCTOBER 1, 2018"));
-        todo.addItem(new Item("CCCCC", "AUGUST 29, 2018"));
+        todo.addItem(new RegularItem("BBBBB", "OCTOBER 1, 2018"));
+        todo.addItem(new BusinessItem("CCCCC", "AUGUST 29, 2018"));
         todo.save("src/testSave");
         TodoList newTodo = new TodoList();
         newTodo.load("src/testSave");
@@ -34,8 +35,8 @@ public class TestSaveable {
 
     @Test
     void testEmptyFile() throws IOException, ParseException {
-        todo.addItem(new Item("BBBBB", "OCTOBER 1, 2018"));
-        todo.addItem(new Item("CCCCC", "AUGUST 29, 2018"));
+        todo.addItem(new RegularItem("BBBBB", "OCTOBER 1, 2018"));
+        todo.addItem(new BusinessItem("CCCCC", "AUGUST 29, 2018"));
         todo.save("src/testSave");
 
         TodoList newTodo = new TodoList();

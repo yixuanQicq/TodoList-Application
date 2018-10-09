@@ -1,6 +1,6 @@
 package test;
 
-import model.Item;
+import model.RegularItem;
 import model.TodoList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,15 +12,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Locale;
 
 public class TestTodoList {
     TodoList testTodoList;
-    private Item testItem1;
+    private RegularItem testRegularItem1;
     private String testDate1;
     private String testName1;
-    private Item testItem2;
+    private RegularItem testRegularItem2;
     private String testDate2;
     private String testName2;
 
@@ -30,22 +29,22 @@ public class TestTodoList {
         DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
         testDate1 = "JUNE 8, 2017";
         testName1 = "CPSC210 Lecture ticket";
-        testItem1 = new Item(testName1, testDate1);
+        testRegularItem1 = new RegularItem(testName1, testDate1);
         testDate2 = "JULY 30, 2019";
         testName2 = "CPSC121 Lecture ticket";
-        testItem2 = new Item(testName2, testDate2);
+        testRegularItem2 = new RegularItem(testName2, testDate2);
     }
 
     @Test
     void testAddItemTodoList() throws ParseException {
         assertEquals(0, testTodoList.size());
-        testTodoList.addItem(testItem1);
+        testTodoList.addItem(testRegularItem1);
         assertEquals(1,testTodoList.size());
     }
 
     @Test
     void testCrossOff() throws ParseException {
-        testTodoList.addItem(testItem1);
+        testTodoList.addItem(testRegularItem1);
         assertEquals("In-progress",testTodoList.getItem(0).getStatus());
         testTodoList.crossedOffItem(0);
         assertEquals("Done",testTodoList.getItem(0).getStatus());
@@ -53,7 +52,7 @@ public class TestTodoList {
 
     @Test
     void tesCrossOffInvalidIndex() throws ParseException {
-        testTodoList.addItem(testItem1);
+        testTodoList.addItem(testRegularItem1);
         assertEquals("In-progress",testTodoList.getItem(0).getStatus());
         testTodoList.crossedOffItem(8);
         assertEquals("In-progress",testTodoList.getItem(0).getStatus());
@@ -61,8 +60,8 @@ public class TestTodoList {
 
     @Test
     void testCheckOverDueOneItemOverDue() throws ParseException {
-        testTodoList.addItem(testItem1);
-        testTodoList.addItem(testItem2);
+        testTodoList.addItem(testRegularItem1);
+        testTodoList.addItem(testRegularItem2);
         assertEquals("In-progress",testTodoList.getItem(0).getStatus());
         assertEquals("In-progress",testTodoList.getItem(1).getStatus());
         testTodoList.checkOverDue();
@@ -72,8 +71,8 @@ public class TestTodoList {
 
     @Test
     void testCheckOverDueNoItemOverDue() throws ParseException {
-        testTodoList.addItem(testItem1);
-        testTodoList.addItem(testItem2);
+        testTodoList.addItem(testRegularItem1);
+        testTodoList.addItem(testRegularItem2);
         testTodoList.crossedOffItem(0);
         assertEquals("Done",testTodoList.getItem(0).getStatus());
         assertEquals("In-progress",testTodoList.getItem(1).getStatus());

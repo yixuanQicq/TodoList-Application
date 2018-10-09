@@ -25,18 +25,18 @@ public class TodoList implements Loadable, Saveable {
         todoList.add(i);
     }
 
-    // MODIFIES: Item
+    // MODIFIES: RegularItem
     // EFFECTS: change the status of item at itemIndex to done, print error message if index is invalid
     public void crossedOffItem(int itemIndex){
         if (itemIndex >=0 && itemIndex < todoList.size()) {
-            Item item = todoList.get(itemIndex);
-            item.setStatus("Done");
+            Item regularItem = todoList.get(itemIndex);
+            regularItem.setStatus("Done");
         } else {
             System.out.println("Invalid Index");
         }
     }
 
-    // MODIFIES: Item
+    // MODIFIES: RegularItem
     // EFFECTS: set the status of the item to overdue
     public void checkOverDue() throws ParseException {
         for (Item i: todoList){
@@ -85,17 +85,15 @@ public class TodoList implements Loadable, Saveable {
     // EFFECTS: print in todolist item in file
     @Override
     public void save(String fileName) throws IOException {
-        List<String> lines = Files.readAllLines(Paths.get(fileName));
         List<String> newLines = new ArrayList<>();
         PrintWriter writer = new PrintWriter("src/savefile.txt","UTF-8");
-            for (Item item: todoList) {
-                newLines.add(item.getName() + " : " + item.getStatus() + " : " + item.getDueDate());
+            for (Item i : todoList) {
+                newLines.add(i.getName() + " : " + i.getStatus() + " : " +
+                        i.getDueDate() + " : " + i.getItemType());
             }
             for (String line : newLines){
-                if (!lines.contains(line)) {
                     writer.println(line);
                 }
-            }
         writer.close();
     }
 
@@ -106,7 +104,15 @@ public class TodoList implements Loadable, Saveable {
         List<String> lines = Files.readAllLines(Paths.get(fileName));
         for (String line: lines) {
             ArrayList<String> partsOfLine = splitOnSpace(line);
-            todoList.add(new Item(partsOfLine.get(0),partsOfLine.get(1), partsOfLine.get(2)));
+            if (partsOfLine.get(3).equals("Urgent")){
+            todoList.add(new UrgentItem(partsOfLine.get(0),partsOfLine.get(1), partsOfLine.get(2)));
+            }
+            if (partsOfLine.get(3).equals("Regular")){
+                todoList.add(new RegularItem(partsOfLine.get(0),partsOfLine.get(1), partsOfLine.get(2)));
+            }
+            if (partsOfLine.get(3).equals("Business")){
+                todoList.add(new BusinessItem(partsOfLine.get(0),partsOfLine.get(1), partsOfLine.get(2)));
+            }
         }
     }
 

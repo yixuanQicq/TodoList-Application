@@ -1,22 +1,16 @@
 package test;
 
 import model.Item;
+import model.RegularItem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TestItem {
-    private Item testItem;
-    private String testDate;
-    private String testName;
-
-    @BeforeEach
-    void setUp(){
-        testDate = "JUNE 8, 2017";
-        testName = "CPSC210 Lecture ticket";
-        testItem = new Item(testName, testDate);
-    }
+public abstract class TestItem {
+    protected Item testItem;
+    protected String testDate;
+    protected String testName;
 
     @Test
     void testConstructor(){
@@ -47,6 +41,4 @@ public class TestItem {
         testItem.setStatus("done");
         assertEquals("done", testItem.getStatus());
     }
-
-
 }

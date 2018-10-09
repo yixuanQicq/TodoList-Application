@@ -1,2 +1,2 @@
-BBBBB : In-progress : OCTOBER 1, 2018
-CCCCC : In-progress : AUGUST 29, 2018
+BBBBB : In-progress : OCTOBER 1, 2018 : Regular
+CCCCC : In-progress : AUGUST 29, 2018 : Business

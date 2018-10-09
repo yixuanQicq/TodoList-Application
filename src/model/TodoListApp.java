@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.*;
 
-
 public class TodoListApp {
     private Scanner scanner;
 
@@ -18,27 +17,15 @@ public class TodoListApp {
     public void run() throws ParseException, IOException {
         TodoList todoList = new TodoList();
         String operation = "";
-        //System.out.println("Welcome to TodoListApp Application, your initial password is set to '0000'");
         int passwordEntered = inputPassword();
         Boolean run = todoList.checkPasswords(passwordEntered);
         todoList.load("src/savefile.txt");
         while (run) {
-            System.out.println("Please select an option: " +
-                    "[1] Add a Todo-list Item, " +
-                    "[2] Cross-Off an Item, " +
-                    "[3] View Current Todo-list, " +
-                    "[4] View Overdues, " +
-                    "[5] Reset Passwords, " +
-                    "[6] Empty Todolist, " +
-                    "[7] Save File and Quit TodoList");
-            System.out.println("-----------------------------------------------" +
-                    "-----------------------------------------------");
+            scanner.nextLine();
+            optionLog();
             operation = scanner.nextLine();
             System.out.println("you selected: [" +operation+ "]");
-            //int passwordEnteredAgain = inputPassword();
-            //run = todoList.checkPasswords(passwordEnteredAgain);
-            System.out.println("-----------------------------------------------" +
-                    "-----------------------------------------------");
+            System.out.println("-----------------------------------------------");
             if (operation.equals("1")){
                 Item additem = makeItem();
                 todoList.addItem(additem);
@@ -71,21 +58,40 @@ public class TodoListApp {
             }
         }
         System.out.println("Thank You for using Todo-list Application");
+    }
 
+    private void optionLog(){
+        System.out.println("Please select an option: ");
+        System.out.println("[1] Add a Todo-list Item ");
+        System.out.println("[2] Cross-Off an Item ");
+        System.out.println("[3] View Current Todo-list ");
+        System.out.println("[4] View Overdues ");
+        System.out.println("[5] Reset Passwords ");
+        System.out.println("[6] Empty Todolist ");
+        System.out.println("[7] Save File and Quit TodoList");
+        System.out.println("-----------------------------------------------");
     }
 
 
 
     // EFFECTS: constructs a new item from user input and return it
     private Item makeItem() throws ParseException {
+        System.out.println("Please select the type of Item you wish to create: ");
+        System.out.println("[1] Urgent Item, [2] Regular Item, [3] Business Item ");
+        System.out.println("-----------------------------------------------");
+        String typeSelection = scanner.nextLine();
         System.out.println("Enter the Item Text: ");
         String newItem = scanner.nextLine();
         System.out.println("Enter the Item Due Date: ");
         System.out.println("Please Follow the Format of [MMMM d, yyyy]");
         String dateString = scanner.nextLine();
-        // DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
-        // Date date = format.parse(dateString);
-        return new Item(newItem, dateString);
+        if (typeSelection.equals("1")){
+            return new UrgentItem(newItem, dateString);
+        }
+        if (typeSelection.equals("2")){
+            return new RegularItem(newItem, dateString);
+        }
+        return new BusinessItem(newItem, dateString);
     }
 
     // EFFECTS: returns the index from user input
@@ -114,13 +120,15 @@ public class TodoListApp {
 
     // EFFECTS: print out todolist
     private void displayList(ArrayList<Item> todoList){
+        todoList.sort(Comparator.comparing(Item::getItemType).reversed());
         System.out.println("TODO-LIST:");
         for (Item s: todoList) {
-            System.out.println("[" + todoList.indexOf(s) + "]:  " + s.getName()+ " --  Status: "+s.getStatus());
+            System.out.println("[" + todoList.indexOf(s) + "]:  " +
+                    s.getItemType() + "  " +
+                    s.getName() +
+                    " --  Status: " + s.getStatus());
         }
-        System.out.println("-----------------------------------------------" +
-                "-----------------------------------------------");
-
+        System.out.println("-----------------------------------------------");
     }
 
     // EFFECTS: print out list of over due items
@@ -136,14 +144,8 @@ public class TodoListApp {
             for (Item i: overDue){
                 System.out.println(i.getName() + "-- Due: "+ i.getDueDate());
             }
-            System.out.println("-----------------------------------------------" +
-                    "-----------------------------------------------");
+            System.out.println("-----------------------------------------------");
         }
     }
-
-
-
-
-
 
 }
