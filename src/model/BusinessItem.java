@@ -6,9 +6,10 @@ public class BusinessItem extends Item{
         super(name, dueDate);
     }
 
-    public BusinessItem(String name, String status, String dueDate) {
+    BusinessItem(String name, String status, String dueDate) {
         super(name, status, dueDate);
     }
+
 
     @Override
     public String getItemType() {

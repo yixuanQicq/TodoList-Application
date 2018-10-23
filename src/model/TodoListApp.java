@@ -1,7 +1,8 @@
 package model;
 
+import model.Exception.DateIncorrectFormatException;
+import model.Exception.TodoListException;
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.*;
 
 public class TodoListApp {
@@ -14,12 +15,16 @@ public class TodoListApp {
     // REQUIRES: input must be either of 1, 2, 3, 4, 5
     // MODIFIES: todoList
     // EFFECTS: print prompts and call corresponding functions to handle user input
-    public void run() throws ParseException, IOException {
+    public void run() {
         TodoList todoList = new TodoList();
         String operation = "";
         int passwordEntered = inputPassword();
         Boolean run = todoList.checkPasswords(passwordEntered);
-        todoList.load("src/savefile.txt");
+        try {
+            todoList.load("src/savefile.txt");
+        } catch (IOException e) {
+            System.out.println("File does not exist, please create the file before running the program!");
+        }
         while (run) {
             scanner.nextLine();
             optionLog();
@@ -28,7 +33,11 @@ public class TodoListApp {
             System.out.println("-----------------------------------------------");
             if (operation.equals("1")){
                 Item additem = makeItem();
-                todoList.addItem(additem);
+                try {
+                    todoList.addItem(additem);
+                } catch (TodoListException e) {
+                    System.out.println(e.getMessage());
+                }
             }
             if (operation.equals("2")){
                 displayList(todoList.getTodoList());
@@ -40,21 +49,40 @@ public class TodoListApp {
                 displayList(todoList.getTodoList());
             }
             if (operation.equals("4")){
-                todoList.checkOverDue();
+                try {
+                    todoList.checkOverDue();
+                } catch (DateIncorrectFormatException e) {
+                    System.out.println("ERROR. DATE FORMAT IS INCORRECT.");
+
+                }
                 printOverDue(todoList.getTodoList());
             }
             if (operation.equals("5")){
+                displayList(todoList.getTodoList());
+                resetDueDate(todoList);
+            }
+            if (operation.equals("6")){
                 int newpassword = setPassword();
                 todoList.resetPasswords(newpassword);
             }
-            if (operation.equals("6")){
+            if (operation.equals("7")){
                 todoList = new TodoList();
-                todoList.emptyFile("src/savefile.txt");
-                System.out.println("Todo-list has been Emptied.");
+                try {
+                    todoList.emptyFile("src/savefile.txt");
+                } catch (IOException e) {
+                    System.out.println("This should never happen, I know this file exists");
+                } finally {
+                    System.out.println("Todo-list has been Emptied.");
+                }
             }
-            else if (operation.equals("7")) {
-                todoList.save("src/savefile.txt");
-                run = false;
+            else if (operation.equals("8")) {
+                try {
+                    todoList.save("src/savefile.txt");
+                } catch (IOException e) {
+                    System.out.println("This should never happen, I know this file exists");
+                } finally {
+                    run = false;
+                }
             }
         }
         System.out.println("Thank You for using Todo-list Application");
@@ -66,16 +94,17 @@ public class TodoListApp {
         System.out.println("[2] Cross-Off an Item ");
         System.out.println("[3] View Current Todo-list ");
         System.out.println("[4] View Overdues ");
-        System.out.println("[5] Reset Passwords ");
-        System.out.println("[6] Empty Todolist ");
-        System.out.println("[7] Save File and Quit TodoList");
+        System.out.println("[5] Reset Item Due Dates ");
+        System.out.println("[6] Reset Passwords ");
+        System.out.println("[7] Empty Todolist ");
+        System.out.println("[8] Save File and Quit TodoList");
         System.out.println("-----------------------------------------------");
     }
 
 
 
     // EFFECTS: constructs a new item from user input and return it
-    private Item makeItem() throws ParseException {
+    private Item makeItem() {
         System.out.println("Please select the type of Item you wish to create: ");
         System.out.println("[1] Urgent Item, [2] Regular Item, [3] Business Item ");
         System.out.println("-----------------------------------------------");
@@ -92,6 +121,16 @@ public class TodoListApp {
             return new RegularItem(newItem, dateString);
         }
         return new BusinessItem(newItem, dateString);
+    }
+
+    private void resetDueDate(TodoList todoList){
+        System.out.println("Please select the item you want to change due-date");
+        int itemIndex = scanner.nextInt();
+        scanner.nextLine();
+        Item item = todoList.getItem(itemIndex);
+        System.out.println("Please enter new Item due-date");
+        String newDueDate = scanner.nextLine();
+        item.setDueDate(newDueDate);
     }
 
     // EFFECTS: returns the index from user input

@@ -1,6 +1,8 @@
 package test;
 
 import model.BusinessItem;
+import model.Exception.TooManyThingsException;
+import model.Exception.TooManyUrgentItemException;
 import model.RegularItem;
 import model.TodoList;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,7 +24,7 @@ public class TestSaveable {
     }
 
     @Test
-    void testSave() throws IOException, ParseException {
+    void testSave() throws IOException, ParseException, TooManyThingsException, TooManyUrgentItemException {
         todo.load("src/testSave");
         assertEquals(0, todo.size());
         todo.addItem(new RegularItem("BBBBB", "OCTOBER 1, 2018"));
@@ -34,7 +36,7 @@ public class TestSaveable {
     }
 
     @Test
-    void testEmptyFile() throws IOException, ParseException {
+    void testEmptyFile() throws IOException, ParseException, TooManyThingsException, TooManyUrgentItemException {
         todo.addItem(new RegularItem("BBBBB", "OCTOBER 1, 2018"));
         todo.addItem(new BusinessItem("CCCCC", "AUGUST 29, 2018"));
         todo.save("src/testSave");

@@ -1,5 +1,8 @@
 package test;
 
+import model.Exception.DateIncorrectFormatException;
+import model.Exception.TooManyThingsException;
+import model.Exception.TooManyUrgentItemException;
 import model.RegularItem;
 import model.TodoList;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,7 +27,7 @@ public class TestTodoList {
     private String testName2;
 
     @BeforeEach
-    void setUp() throws ParseException {
+    void setUp() {
         testTodoList = new TodoList();
         DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
         testDate1 = "JUNE 8, 2017";
@@ -36,14 +39,14 @@ public class TestTodoList {
     }
 
     @Test
-    void testAddItemTodoList() throws ParseException {
+    void testAddItemTodoList() throws TooManyThingsException, TooManyUrgentItemException {
         assertEquals(0, testTodoList.size());
         testTodoList.addItem(testRegularItem1);
         assertEquals(1,testTodoList.size());
     }
 
     @Test
-    void testCrossOff() throws ParseException {
+    void testCrossOff() throws TooManyThingsException, TooManyUrgentItemException {
         testTodoList.addItem(testRegularItem1);
         assertEquals("In-progress",testTodoList.getItem(0).getStatus());
         testTodoList.crossedOffItem(0);
@@ -51,7 +54,7 @@ public class TestTodoList {
     }
 
     @Test
-    void tesCrossOffInvalidIndex() throws ParseException {
+    void tesCrossOffInvalidIndex() throws TooManyThingsException, TooManyUrgentItemException {
         testTodoList.addItem(testRegularItem1);
         assertEquals("In-progress",testTodoList.getItem(0).getStatus());
         testTodoList.crossedOffItem(8);
@@ -59,7 +62,7 @@ public class TestTodoList {
     }
 
     @Test
-    void testCheckOverDueOneItemOverDue() throws ParseException {
+    void testCheckOverDueOneItemOverDue() throws DateIncorrectFormatException, TooManyThingsException, TooManyUrgentItemException {
         testTodoList.addItem(testRegularItem1);
         testTodoList.addItem(testRegularItem2);
         assertEquals("In-progress",testTodoList.getItem(0).getStatus());
@@ -70,7 +73,7 @@ public class TestTodoList {
     }
 
     @Test
-    void testCheckOverDueNoItemOverDue() throws ParseException {
+    void testCheckOverDueNoItemOverDue() throws TooManyThingsException, TooManyUrgentItemException, DateIncorrectFormatException {
         testTodoList.addItem(testRegularItem1);
         testTodoList.addItem(testRegularItem2);
         testTodoList.crossedOffItem(0);

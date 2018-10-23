@@ -5,7 +5,7 @@ public class UrgentItem extends Item {
         super(name, dueDate);
     }
 
-    public UrgentItem(String name, String status, String dueDate) {
+    UrgentItem(String name, String status, String dueDate) {
         super(name, status, dueDate);
     }
 

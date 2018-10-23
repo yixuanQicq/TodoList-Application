@@ -5,13 +5,13 @@ public abstract class Item {
     protected String  status;
     protected String dueDate;
 
-    public Item(String name, String dueDate){
+    Item(String name, String dueDate){
         this.name = name;
         this.dueDate = dueDate;
         status = "In-progress";
     }
 
-    public Item(String name, String status, String dueDate){
+    Item(String name, String status, String dueDate){
         this.name = name;
         this.status = status;
         this.dueDate = dueDate;

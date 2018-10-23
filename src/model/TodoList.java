@@ -1,5 +1,9 @@
 package model;
 
+import model.Exception.DateIncorrectFormatException;
+import model.Exception.TooManyThingsException;
+import model.Exception.TooManyUrgentItemException;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
@@ -10,9 +14,13 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class TodoList implements Loadable, Saveable {
+    private static final int URGENTITEMLIMIT = 5;
+    private static final int ITEMLIMIT = 25;
+
     private ArrayList<Item> todoList;
     private Date currentDate = new Date();
     private User user = new User();
+
 
     public TodoList (){
         todoList = new ArrayList<>();
@@ -21,8 +29,26 @@ public class TodoList implements Loadable, Saveable {
     // REQUIRES: user input according to required format
     // MODIFIES: this
     // EFFECTS: add a new item to the list, throws ParseException if date input is in wrong format
-    public void addItem(Item i) throws ParseException {
+    public void addItem(Item i) throws TooManyUrgentItemException, TooManyThingsException {
+        int urgentCount = countUrgentItem();
+        if(i.getItemType().equals("Urgent") && urgentCount >= URGENTITEMLIMIT){
+            throw new TooManyUrgentItemException("Too Many Urgent Items in the List.");
+        }
+        if(todoList.size() >= ITEMLIMIT){
+            throw new TooManyThingsException("Too Many Item in the List");
+        }
         todoList.add(i);
+    }
+
+    // EFFECTS: count the number of urgent item in the todolist
+    private int countUrgentItem() {
+        int counter = 0;
+        for (Item i: todoList){
+            if(i.getItemType().equals("Urgent")){
+                counter+=1;
+            }
+        }
+        return counter;
     }
 
     // MODIFIES: RegularItem
@@ -38,17 +64,24 @@ public class TodoList implements Loadable, Saveable {
 
     // MODIFIES: RegularItem
     // EFFECTS: set the status of the item to overdue
-    public void checkOverDue() throws ParseException {
-        for (Item i: todoList){
+    //          throw DateIncorrectFormatException if catch ParseException
+    public void checkOverDue() throws DateIncorrectFormatException {
+        for (Item i : todoList) {
             DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
-            Date date = format.parse(i.getDueDate());
-            if (date.before(currentDate)){
-                if(!(i.getStatus().equals("Done"))){
-                    i.setStatus("Overdue");
+            Date date;
+            try {
+                date = format.parse(i.getDueDate());
+                if (date.before(currentDate)) {
+                    if (!(i.getStatus().equals("Done"))) {
+                        i.setStatus("Overdue");
+                    }
                 }
+            } catch (ParseException e) {
+                throw new DateIncorrectFormatException();
             }
         }
     }
+
 
     // EFFECTS: return true if password is correct, false otherwise
     public Boolean checkPasswords(int passwordEntered) {

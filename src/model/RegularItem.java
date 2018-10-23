@@ -6,7 +6,7 @@ public class RegularItem extends Item{
         super(name, dueDate);
     }
 
-    public RegularItem(String name, String status, String dueDate) {
+    RegularItem(String name, String status, String dueDate) {
         super(name, status, dueDate);
     }
 
