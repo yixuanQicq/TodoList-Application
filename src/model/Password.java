@@ -18,22 +18,26 @@ public class Password {
         }
     }
 
-    public int getPw() {
-        return pw;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Password password = (Password) o;
-        return pw == password.pw &&
-                Objects.equals(user, password.user);
+        return pw == password.pw;
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(user, pw);
+        return Objects.hash(pw);
     }
+
+    public User getUser() {
+        return user;
+    }
+
+    public int getPw() {
+        return pw;
+    }
+
 }

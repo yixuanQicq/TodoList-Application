@@ -3,8 +3,10 @@ package test;
 import model.Exception.DateIncorrectFormatException;
 import model.Exception.TooManyThingsException;
 import model.Exception.TooManyUrgentItemException;
+import model.Password;
 import model.RegularItem;
 import model.TodoList;
+import model.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -82,6 +84,28 @@ public class TestTodoList {
         testTodoList.checkOverDue();
         assertEquals("Done",testTodoList.getItem(0).getStatus());
         assertEquals("In-progress",testTodoList.getItem(1).getStatus());
+    }
+
+    @Test
+    void testAccessVerification() {
+        assertTrue(testTodoList.accessVerification(0000, "admin"));
+        assertFalse(testTodoList.accessVerification(0010, "admin"));
+        User u1 = new User("a", new Password(0001));
+        testTodoList.addUser(u1);
+        assertTrue(testTodoList.accessVerification(0001, "a"));
+        testTodoList.resetPasswords(u1,1000);
+        assertFalse(testTodoList.accessVerification(0001, "a"));
+        assertTrue(testTodoList.accessVerification(1000, "a"));
+    }
+
+    @Test
+    void testAddUser(){
+        assertEquals(1, testTodoList.getUserSystem().size());
+        testTodoList.addUser("cq", 0000);
+        assertEquals(2, testTodoList.getUserSystem().size());
+        User u1 = new User("a");
+        testTodoList.addUser(u1);
+        assertEquals(3, testTodoList.getUserSystem().size());
     }
 
 

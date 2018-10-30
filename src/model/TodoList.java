@@ -200,8 +200,8 @@ public class TodoList implements Loadable, Saveable {
     // EFFECTS: set user password to passwordentered
     public void resetPasswords(User u, int passwordentered) {
         Password pw  = new Password(passwordentered);
-        u.setPasswords(pw);
         userSystem.remove(u);
+        u.setPasswords(pw);
         userSystem.put(u,pw);
     }
 
@@ -224,4 +224,7 @@ public class TodoList implements Loadable, Saveable {
         addUser(admin);
     }
 
+    public Map<User, Password> getUserSystem() {
+        return userSystem;
+    }
 }

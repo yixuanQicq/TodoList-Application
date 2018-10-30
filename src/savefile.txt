@@ -1,3 +1,2 @@
-AA : In-progress : JUNE 1, 2019 : Urgent
 BBBBB : In-progress : OCTOBER 1, 2018 : Regular
 CCCCC : In-progress : AUGUST 29, 2018 : Business
