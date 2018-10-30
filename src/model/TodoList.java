@@ -19,12 +19,15 @@ public class TodoList implements Loadable, Saveable {
 
     private ArrayList<Item> todoList;
     private Date currentDate = new Date();
-    private User user = new User();
+    private Map<User,Password> userSystem;
 
 
     public TodoList (){
         todoList = new ArrayList<>();
+        userSystem = new HashMap<>();
+        defaultUser();
     }
+
 
     // REQUIRES: user input according to required format
     // MODIFIES: this
@@ -76,6 +79,9 @@ public class TodoList implements Loadable, Saveable {
                         i.setStatus("Overdue");
                     }
                 }
+                if (i.getStatus().equals("Overdue") && date.after(currentDate)){
+                    i.setStatus("In-progress");
+                }
             } catch (ParseException e) {
                 throw new DateIncorrectFormatException();
             }
@@ -83,20 +89,6 @@ public class TodoList implements Loadable, Saveable {
     }
 
 
-    // EFFECTS: return true if password is correct, false otherwise
-    public Boolean checkPasswords(int passwordEntered) {
-        if (user.getPasswords() == passwordEntered) {
-            return true;
-        }
-        System.out.println("ERROR: PASSWORD INCORRECT");
-        return false;
-    }
-
-    // MODIFIES: User
-    // EFFECTS: set user password to passwordentered
-    public void resetPasswords(int passwordentered) {
-        user.setPasswords(passwordentered);
-    }
 
     // EFFECTS: return size of the todolist
     public int size(){
@@ -117,7 +109,7 @@ public class TodoList implements Loadable, Saveable {
     // MODIFIES: this
     // EFFECTS: print in todolist item in file
     @Override
-    public void save(String fileName) throws IOException {
+    public void saveItem(String fileName) throws IOException {
         List<String> newLines = new ArrayList<>();
         PrintWriter writer = new PrintWriter("src/savefile.txt","UTF-8");
             for (Item i : todoList) {
@@ -130,10 +122,24 @@ public class TodoList implements Loadable, Saveable {
         writer.close();
     }
 
+    @Override
+    public void saveUserSystem(String fileName) throws IOException {
+        List<String> newLines = new ArrayList<>();
+        PrintWriter writer = new PrintWriter(fileName,"UTF-8");
+        Set<Map.Entry<User, Password>> entries = userSystem.entrySet();
+        for (Map.Entry<User, Password> entry : entries) {
+            newLines.add(entry.getKey().getUserName() + " : " + Integer.toString(entry.getValue().getPw()));
+        }
+        for (String line : newLines){
+            writer.println(line);
+        }
+        writer.close();
+    }
+
     // REQUIRES: input file name to exist
     // EFFECTS: print file items into todolist
     @Override
-    public void load(String fileName) throws IOException {
+    public void loadItem(String fileName) throws IOException {
         List<String> lines = Files.readAllLines(Paths.get(fileName));
         for (String line: lines) {
             ArrayList<String> partsOfLine = splitOnSpace(line);
@@ -146,6 +152,17 @@ public class TodoList implements Loadable, Saveable {
             if (partsOfLine.get(3).equals("Business")){
                 todoList.add(new BusinessItem(partsOfLine.get(0),partsOfLine.get(1), partsOfLine.get(2)));
             }
+        }
+    }
+
+    @Override
+    public void loadUserSystem(String fileName) throws IOException {
+        List<String> lines = Files.readAllLines(Paths.get(fileName));
+        for (String line: lines){
+            ArrayList<String> partsOfLine = splitOnSpace(line);
+            Password password = new Password(Integer.parseInt(partsOfLine.get(1)));
+            User user = new User(partsOfLine.get(0), password);
+            userSystem.put(user, password);
         }
     }
 
@@ -163,6 +180,48 @@ public class TodoList implements Loadable, Saveable {
         PrintWriter writer = new PrintWriter(fileName,"UTF-8");
         writer.print("");
         writer.close();
+    }
+
+    // EFFECTS: check if user have access to the todolist, return false if access denied
+    public boolean accessVerification(int passWordEntered, String nameEntered){
+        Password pwEntered = new Password(passWordEntered);
+        User userEntered = new User(nameEntered, pwEntered);
+        Set<User> users = userSystem.keySet();
+        for(User u: users){
+            if (u.equals(userEntered)){
+                return true;
+            }
+        }
+        System.out.println("Access denied: incorrect password or invalid username");
+        return false;
+    }
+
+    // MODIFIES: User
+    // EFFECTS: set user password to passwordentered
+    public void resetPasswords(User u, int passwordentered) {
+        Password pw  = new Password(passwordentered);
+        u.setPasswords(pw);
+        userSystem.remove(u);
+        userSystem.put(u,pw);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: add a new user to user system
+    public void addUser(User u){
+        userSystem.put(u, u.getPasswords());
+    }
+
+    public void addUser(String userName, int password){
+        Password passwordEntered = new Password(password);
+        User user = new User(userName, passwordEntered);
+        userSystem.put(user, user.getPasswords());
+    }
+
+    // MODIFIES: this
+    // EFFECTS: add a default user admin to the user system
+    private void defaultUser(){
+        User admin = new User("admin");
+        addUser(admin);
     }
 
 }

@@ -25,13 +25,13 @@ public class TestSaveable {
 
     @Test
     void testSave() throws IOException, ParseException, TooManyThingsException, TooManyUrgentItemException {
-        todo.load("src/testSave");
+        todo.loadItem("src/testSave");
         assertEquals(0, todo.size());
         todo.addItem(new RegularItem("BBBBB", "OCTOBER 1, 2018"));
         todo.addItem(new BusinessItem("CCCCC", "AUGUST 29, 2018"));
-        todo.save("src/testSave");
+        todo.saveItem("src/testSave");
         TodoList newTodo = new TodoList();
-        newTodo.load("src/testSave");
+        newTodo.loadItem("src/testSave");
         assertEquals(2,todo.size());
     }
 
@@ -39,16 +39,16 @@ public class TestSaveable {
     void testEmptyFile() throws IOException, ParseException, TooManyThingsException, TooManyUrgentItemException {
         todo.addItem(new RegularItem("BBBBB", "OCTOBER 1, 2018"));
         todo.addItem(new BusinessItem("CCCCC", "AUGUST 29, 2018"));
-        todo.save("src/testSave");
+        todo.saveItem("src/testSave");
 
         TodoList newTodo = new TodoList();
-        newTodo.load("src/testSave");
+        newTodo.loadItem("src/testSave");
         assertEquals(2,todo.size());
 
         todo.emptyFile("src/testSave");
 
         newTodo = new TodoList();
-        newTodo.load("src/testSave");
+        newTodo.loadItem("src/testSave");
         assertEquals(2,todo.size());
 
     }

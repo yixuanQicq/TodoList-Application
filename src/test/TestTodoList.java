@@ -84,21 +84,5 @@ public class TestTodoList {
         assertEquals("In-progress",testTodoList.getItem(1).getStatus());
     }
 
-    @Test
-    void testCheckPasswords(){
-        assertTrue(testTodoList.checkPasswords(0000));
-        assertFalse(testTodoList.checkPasswords(3049857));
-    }
-
-    @Test
-    void testResetPasswords(){
-        assertTrue(testTodoList.checkPasswords(0000));
-        testTodoList.resetPasswords(1234);
-        assertFalse(testTodoList.checkPasswords(0000));
-        assertTrue(testTodoList.checkPasswords(1234));
-    }
-
-
-
 
     }

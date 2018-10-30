@@ -17,14 +17,21 @@ public class TodoListApp {
     // EFFECTS: print prompts and call corresponding functions to handle user input
     public void run() {
         TodoList todoList = new TodoList();
+
         String operation = "";
+        String nameEntered = inputUsername();
         int passwordEntered = inputPassword();
-        Boolean run = todoList.checkPasswords(passwordEntered);
         try {
-            todoList.load("src/savefile.txt");
+            todoList.loadItem("src/savefile.txt");
+            todoList.loadUserSystem("src/userfile");
         } catch (IOException e) {
             System.out.println("File does not exist, please create the file before running the program!");
         }
+
+        User currentUser = new User(nameEntered);
+        currentUser.setPasswords(new Password(passwordEntered));
+        Boolean run = todoList.accessVerification(passwordEntered,nameEntered);
+
         while (run) {
             scanner.nextLine();
             optionLog();
@@ -63,7 +70,7 @@ public class TodoListApp {
             }
             if (operation.equals("6")){
                 int newpassword = setPassword();
-                todoList.resetPasswords(newpassword);
+                todoList.resetPasswords(currentUser,newpassword);
             }
             if (operation.equals("7")){
                 todoList = new TodoList();
@@ -75,9 +82,13 @@ public class TodoListApp {
                     System.out.println("Todo-list has been Emptied.");
                 }
             }
-            else if (operation.equals("8")) {
+            if (operation.equals("8")){
+                addNewUser(todoList);
+            }
+            else if (operation.equals("9")) {
                 try {
-                    todoList.save("src/savefile.txt");
+                    todoList.saveItem("src/savefile.txt");
+                    todoList.saveUserSystem("src/userfile");
                 } catch (IOException e) {
                     System.out.println("This should never happen, I know this file exists");
                 } finally {
@@ -88,6 +99,7 @@ public class TodoListApp {
         System.out.println("Thank You for using Todo-list Application");
     }
 
+
     private void optionLog(){
         System.out.println("Please select an option: ");
         System.out.println("[1] Add a Todo-list Item ");
@@ -97,7 +109,8 @@ public class TodoListApp {
         System.out.println("[5] Reset Item Due Dates ");
         System.out.println("[6] Reset Passwords ");
         System.out.println("[7] Empty Todolist ");
-        System.out.println("[8] Save File and Quit TodoList");
+        System.out.println("[8] Add A New User to the System");
+        System.out.println("[9] Save File and Quit TodoList");
         System.out.println("-----------------------------------------------");
     }
 
@@ -149,6 +162,12 @@ public class TodoListApp {
         return passwordEntered;
     }
 
+    private String inputUsername(){
+        System.out.println("Please Enter Username for the Todo-List Application");
+        String nameEntered = scanner.nextLine();
+        return nameEntered;
+    }
+
     // EFFECTS: return new password from user input
     private int setPassword(){
         System.out.println("Please Enter New Passwords (Numbers Only): ");
@@ -185,6 +204,16 @@ public class TodoListApp {
             }
             System.out.println("-----------------------------------------------");
         }
+    }
+
+    private void addNewUser(TodoList todoList){
+        System.out.println("Please enter new User Name");
+        String newUserName = scanner.nextLine();
+        System.out.println("Please enter new User Password");
+        int newPassWordInt = scanner.nextInt();
+        scanner.nextLine();
+
+        todoList.addUser(newUserName, newPassWordInt);
     }
 
 }
