@@ -17,27 +17,28 @@ public class TodoListApp {
     // EFFECTS: print prompts and call corresponding functions to handle user input
     public void run() {
         TodoList todoList = new TodoList();
+        UserSystem userSystem = new UserSystem();
 
         String operation = "";
         String nameEntered = inputUsername();
         int passwordEntered = inputPassword();
         try {
-            todoList.loadItem("src/savefile.txt");
-            todoList.loadUserSystem("src/userfile");
+            todoList.load("src/savefile.txt");
+            userSystem.load("src/userfile");
         } catch (IOException e) {
             System.out.println("File does not exist, please create the file before running the program!");
         }
 
         User currentUser = new User(nameEntered);
         currentUser.setPasswords(new Password(passwordEntered));
-        Boolean run = todoList.accessVerification(passwordEntered,nameEntered);
+        Boolean run = userSystem.accessVerification(passwordEntered,nameEntered);
 
         while (run) {
             scanner.nextLine();
             optionLog();
             operation = scanner.nextLine();
             System.out.println("you selected: [" +operation+ "]");
-            System.out.println("-----------------------------------------------");
+            printLines();
             if (operation.equals("1")){
                 Item additem = makeItem();
                 try {
@@ -70,7 +71,7 @@ public class TodoListApp {
             }
             if (operation.equals("6")){
                 int newpassword = setPassword();
-                todoList.resetPasswords(currentUser,newpassword);
+                userSystem.resetPasswords(currentUser,newpassword);
             }
             if (operation.equals("7")){
                 todoList = new TodoList();
@@ -83,12 +84,12 @@ public class TodoListApp {
                 }
             }
             if (operation.equals("8")){
-                addNewUser(todoList);
+                addNewUser(userSystem);
             }
             else if (operation.equals("9")) {
                 try {
-                    todoList.saveItem("src/savefile.txt");
-                    todoList.saveUserSystem("src/userfile");
+                    todoList.save("src/savefile.txt");
+                    userSystem.save("src/userfile");
                 } catch (IOException e) {
                     System.out.println("This should never happen, I know this file exists");
                 } finally {
@@ -111,7 +112,7 @@ public class TodoListApp {
         System.out.println("[7] Empty Todolist ");
         System.out.println("[8] Add A New User to the System");
         System.out.println("[9] Save File and Quit TodoList");
-        System.out.println("-----------------------------------------------");
+        printLines();
     }
 
 
@@ -120,7 +121,7 @@ public class TodoListApp {
     private Item makeItem() {
         System.out.println("Please select the type of Item you wish to create: ");
         System.out.println("[1] Urgent Item, [2] Regular Item, [3] Business Item ");
-        System.out.println("-----------------------------------------------");
+        printLines();
         String typeSelection = scanner.nextLine();
         System.out.println("Enter the Item Text: ");
         String newItem = scanner.nextLine();
@@ -186,7 +187,7 @@ public class TodoListApp {
                     s.getName() +
                     " --  Status: " + s.getStatus());
         }
-        System.out.println("-----------------------------------------------");
+        printLines();
     }
 
     // EFFECTS: print out list of over due items
@@ -202,18 +203,21 @@ public class TodoListApp {
             for (Item i: overDue){
                 System.out.println(i.getName() + "-- Due: "+ i.getDueDate());
             }
-            System.out.println("-----------------------------------------------");
+            printLines();
         }
     }
 
-    private void addNewUser(TodoList todoList){
+    private void addNewUser(UserSystem userSystem){
         System.out.println("Please enter new User Name");
         String newUserName = scanner.nextLine();
         System.out.println("Please enter new User Password");
         int newPassWordInt = scanner.nextInt();
         scanner.nextLine();
 
-        todoList.addUser(newUserName, newPassWordInt);
+        userSystem.addUser(newUserName, newPassWordInt);
     }
 
+    private void printLines(){
+        System.out.println("-----------------------------------------------");
+    }
 }

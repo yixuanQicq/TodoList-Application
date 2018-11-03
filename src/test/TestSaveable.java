@@ -5,6 +5,7 @@ import model.Exception.TooManyThingsException;
 import model.Exception.TooManyUrgentItemException;
 import model.RegularItem;
 import model.TodoList;
+import model.UserSystem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestSaveable {
     private TodoList todo;
+    private UserSystem user;
 
     @BeforeEach
     void setup() throws IOException {
@@ -25,13 +27,13 @@ public class TestSaveable {
 
     @Test
     void testSaveItem() throws IOException, ParseException, TooManyThingsException, TooManyUrgentItemException {
-        todo.loadItem("src/testSave");
+        todo.load("src/testSave");
         assertEquals(0, todo.size());
         todo.addItem(new RegularItem("BBBBB", "OCTOBER 1, 2018"));
         todo.addItem(new BusinessItem("CCCCC", "AUGUST 29, 2018"));
-        todo.saveItem("src/testSave");
+        todo.save("src/testSave");
         TodoList newTodo = new TodoList();
-        newTodo.loadItem("src/testSave");
+        newTodo.load("src/testSave");
         assertEquals(2,todo.size());
     }
 
@@ -39,30 +41,30 @@ public class TestSaveable {
     void testEmptyFile() throws IOException, ParseException, TooManyThingsException, TooManyUrgentItemException {
         todo.addItem(new RegularItem("BBBBB", "OCTOBER 1, 2018"));
         todo.addItem(new BusinessItem("CCCCC", "AUGUST 29, 2018"));
-        todo.saveItem("src/testSave");
+        todo.save("src/testSave");
 
         TodoList newTodo = new TodoList();
-        newTodo.loadItem("src/testSave");
+        newTodo.load("src/testSave");
         assertEquals(2,todo.size());
 
         todo.emptyFile("src/testSave");
 
         newTodo = new TodoList();
-        newTodo.loadItem("src/testSave");
+        newTodo.load("src/testSave");
         assertEquals(2,todo.size());
     }
 
     @Test
     void testSaveUser() throws IOException {
-        todo.loadUserSystem("src/testSave");
-        assertEquals(1, todo.getUserSystem().size());
-        todo.addUser("AAAA", 0000);
-        todo.addUser("BBBB", 1234);
-        assertEquals(3,todo.getUserSystem().size());
-        todo.saveUserSystem("src/testSave");
-        TodoList newTodo = new TodoList();
-        newTodo.loadUserSystem("src/testSave");
-        assertEquals(3,newTodo.getUserSystem().size());
+        user.load("src/testSave");
+        assertEquals(1, user.getUserInfo().size());
+        user.addUser("AAAA", 0000);
+        user.addUser("BBBB", 1234);
+        assertEquals(3,user.getUserInfo().size());
+        user.save("src/testSave");
+        UserSystem newUser = new UserSystem();
+        newUser.load("src/testSave");
+        assertEquals(3,newUser.getUserInfo().size());
     }
 
 }

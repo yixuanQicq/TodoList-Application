@@ -1,6 +1,7 @@
 package test;
 
 import model.TodoList;
+import model.UserSystem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,17 +11,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestLoadable {
     private TodoList todo;
+    private UserSystem user;
 
     @BeforeEach
     void setup(){
         todo = new TodoList();
+        user = new UserSystem();
 
     }
 
     @Test
     void testLoadFromFile() throws IOException {
         assertEquals(0,todo.size());
-        todo.loadItem("src/testLoadItem");
+        todo.load("src/testLoadItem");
         assertEquals(3,todo.size());
         assertEquals("AAAAA",todo.getItem(0).getName());
         assertEquals("BBBBB",todo.getItem(1).getName());
@@ -29,9 +32,9 @@ public class TestLoadable {
 
     @Test
     void testLoadUserSystem() throws IOException {
-        assertEquals(1, todo.getUserSystem().size());
-        todo.loadUserSystem("src/testLoadUser");
-        assertEquals(2, todo.getUserSystem().size());
+        assertEquals(1, user.getUserInfo().size());
+        user.load("src/testLoadUser");
+        assertEquals(2, user.getUserInfo().size());
     }
 
 
