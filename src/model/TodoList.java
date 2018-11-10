@@ -13,19 +13,18 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class TodoList implements Loadable, Saveable {
+public class TodoList extends Subject implements Loadable, Saveable {
     private static final int URGENTITEMLIMIT = 5;
     private static final int ITEMLIMIT = 25;
 
     private ArrayList<Item> todoList;
     private Date currentDate = new Date();
-    private Map<User,Password> userSystem;
 
 
     public TodoList (){
+        super();
+        addObserver(new TodoListCustomObserver());
         todoList = new ArrayList<>();
-        userSystem = new HashMap<>();
-//        defaultUser();
     }
 
 
@@ -41,6 +40,7 @@ public class TodoList implements Loadable, Saveable {
             throw new TooManyThingsException("Too Many Item in the List");
         }
         todoList.add(i);
+        notifyObservers(i);
     }
 
     // MODIFIES: RegularItem
