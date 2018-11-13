@@ -1,9 +1,9 @@
 package model;
 
-public class TodoListCustomObserver implements CustomObserver {
+public class TodoListReport implements Observer {
     private int itemCount;
 
-    public TodoListCustomObserver(){
+    public TodoListReport(){
         itemCount = 0;
     }
 

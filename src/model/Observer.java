@@ -1,6 +1,6 @@
 package model;
 
-public interface CustomObserver {
+public interface Observer {
 
     void update(Item i);
 }

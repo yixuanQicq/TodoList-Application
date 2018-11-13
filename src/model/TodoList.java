@@ -23,7 +23,7 @@ public class TodoList extends Subject implements Loadable, Saveable {
 
     public TodoList (){
         super();
-        addObserver(new TodoListCustomObserver());
+        addObserver(new TodoListReport());
         todoList = new ArrayList<>();
     }
 
