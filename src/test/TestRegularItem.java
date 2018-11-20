@@ -2,6 +2,7 @@ package test;
 
 import model.RegularItem;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class TestRegularItem extends TestItem {
     @BeforeEach
@@ -10,5 +11,6 @@ public class TestRegularItem extends TestItem {
         testName = "CPSC210 Lecture ticket";
         testItem = new RegularItem(testName, testDate);
     }
+
 
 }

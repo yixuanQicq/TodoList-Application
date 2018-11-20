@@ -13,4 +13,13 @@ public class UrgentItem extends Item {
     public String getItemType() {
         return "Urgent";
     }
+
+    @Override
+    public String toString() {
+        return
+                name + "   " +
+                "Status: " + status + "   " +
+                "DueDate: " + dueDate + "  " +
+                        "   !!URGENT!!";
+    }
 }

@@ -14,4 +14,11 @@ public class RegularItem extends Item{
     public String getItemType() {
         return "Regular";
     }
+
+    @Override
+    public String toString() {
+        return name + "   " +
+                "Status: " + status + "   " +
+                "DueDate: " + dueDate + "  ";
+    }
 }

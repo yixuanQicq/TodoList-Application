@@ -15,4 +15,12 @@ public class BusinessItem extends Item{
     public String getItemType() {
         return "Business";
     }
+
+    @Override
+    public String toString() {
+        return
+                name + "   " +
+                "Status: " + status + "   " +
+                "DueDate: " + dueDate + "  ";
+    }
 }

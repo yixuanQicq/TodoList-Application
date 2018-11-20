@@ -41,4 +41,9 @@ public abstract class TestItem {
         testItem.setStatus("done");
         assertEquals("done", testItem.getStatus());
     }
+
+    @Test
+    void testToString(){
+        System.out.println(testItem.toString());
+    }
 }

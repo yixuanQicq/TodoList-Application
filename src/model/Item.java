@@ -2,19 +2,22 @@ package model;
 
 public abstract class Item {
     protected String name;
-    protected String  status;
+    protected String status;
     protected String dueDate;
+    protected String type;
 
     Item(String name, String dueDate){
         this.name = name;
         this.dueDate = dueDate;
         status = "In-progress";
+        this.type = getItemType();
     }
 
     Item(String name, String status, String dueDate){
         this.name = name;
         this.status = status;
         this.dueDate = dueDate;
+        this.type = getItemType();
     }
 
     // EFFECTS: return the name of the item
@@ -53,7 +56,5 @@ public abstract class Item {
 
     // EFFECTS: return item type as string
     public abstract String getItemType();
-
-
 
 }

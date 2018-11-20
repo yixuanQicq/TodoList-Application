@@ -24,7 +24,7 @@ public class LoginWindow extends JFrame implements ActionListener {
         setLayout(null);
 
         JLabel welcome = new JLabel("Welcome to the CPSC 210 Project for 2018W1!", JLabel.CENTER);
-        welcome.setBounds(50,40, 300,20);
+        welcome.setBounds(48,40, 300,20);
         add(welcome);
 
         JLabel enterYourUsername = new JLabel("Please enter your username", JLabel.CENTER);
