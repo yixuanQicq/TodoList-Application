@@ -59,7 +59,8 @@ public abstract class Item {
 
     // MODIFIES: this
     // EFFECTS: change the status of the item
-    public void setDueDate(String dueDate) {
+    public void setDueDate(String dueDate) throws ParseException {
+        new RegularItem(getName(),dueDate);
         this.dueDate = dueDate;
     }
 

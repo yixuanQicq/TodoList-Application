@@ -5,6 +5,8 @@ import model.RegularItem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.text.ParseException;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public abstract class TestItem {
@@ -27,7 +29,7 @@ public abstract class TestItem {
     }
 
     @Test
-    void testsetDate() {
+    void testsetDate() throws ParseException {
         assertEquals(testDate, testItem.getDueDate());
         String newDate = "JUNE 10, 2017";
         testItem.setDueDate(newDate);

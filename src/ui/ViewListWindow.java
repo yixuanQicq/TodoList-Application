@@ -95,7 +95,7 @@ public class ViewListWindow extends JFrame implements ActionListener{
         }
         if(e.getActionCommand().equals("remove")){
             int row = table.getSelectedRow();
-            todoList.crossedOffItem(row);
+            todoList.crossedOffItem(row+1);
             JOptionPane.showMessageDialog(null,"Item status has been changed successfully.");
             String done = "Done";
             table.setValueAt((Object)done,row,4);
@@ -107,8 +107,7 @@ public class ViewListWindow extends JFrame implements ActionListener{
         }
         if(e.getActionCommand().equals("resetDue")){
             int row = table.getSelectedRow();
-            Item item = todoList.getItem(row -1);
-            new ResetDueWindow(item, this);
+            new ResetDueWindow(row, this);
 
 
         }
