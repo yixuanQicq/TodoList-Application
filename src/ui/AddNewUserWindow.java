@@ -1,10 +1,13 @@
 package ui;
 
+import model.UserSystem;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class AddNewUserWindow extends JFrame implements ActionListener{
 
@@ -53,6 +56,23 @@ public class AddNewUserWindow extends JFrame implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        UserSystem userSystem = new UserSystem();
+        try {
+            userSystem.load("src/userfile");
+        } catch (IOException excp) {
+            System.out.println("File does not exist, please create the file before running the program!");
+        }
+        if(e.getActionCommand().equals("Enter")){
+            String nm = username.getText();
+            int pw =  Integer.parseInt(userpassword.getText());
+            userSystem.addUser(nm,pw);
+            try {
+                userSystem.save("src/userfile");
+            } catch (IOException ex) {
+                System.out.println("This should never happen, I know this file exists");
+            }
+            JOptionPane.showMessageDialog(null, "New user has been added");
+            dispose();
+        }
     }
 }

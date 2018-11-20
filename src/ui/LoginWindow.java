@@ -35,8 +35,8 @@ public class LoginWindow extends JFrame implements ActionListener {
         username.setBounds(50,100, 100,20);
         add(username);
 
-        JLabel enterYourPassword = new JLabel("Please enter your password", JLabel.CENTER);
-        enterYourPassword.setBounds(40,150, 200,20);
+        JLabel enterYourPassword = new JLabel("Please enter your password (Numbers Only)");
+        enterYourPassword.setBounds(53,150, 400,20);
         add(enterYourPassword);
 
         userpassword = new JTextField();
