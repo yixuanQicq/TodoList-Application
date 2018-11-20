@@ -21,6 +21,7 @@ public class OptionWindow extends JFrame implements ActionListener {
 
     public OptionWindow(User currentUser){
         super("TodoList Application");
+        this.currentUser = currentUser;
         setPreferredSize(new Dimension(500, 300));
         ((JPanel) getContentPane()).setBorder(new EmptyBorder(13, 13, 13, 13) );
         setLayout(null);
@@ -73,7 +74,9 @@ public class OptionWindow extends JFrame implements ActionListener {
         if(e.getActionCommand().equals("view")){
             new ViewListWindow();
         }
-        if(e.getActionCommand().equals("resetPassword")){}
+        if(e.getActionCommand().equals("resetPassword")){
+            new ResetPasswordWindow(currentUser);
+        }
         if(e.getActionCommand().equals("empty")){
             TodoList todoList = new TodoList();
                 try {
