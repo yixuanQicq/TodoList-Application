@@ -31,33 +31,39 @@ public class OptionWindow extends JFrame implements ActionListener {
         add(optionMessage);
 
         JButton viewList = new JButton("View Current Todolist");
-        viewList.setBounds(xPosition, 50, buttonWidth, buttonHeight );
+        viewList.setBounds(xPosition, 40, buttonWidth, buttonHeight );
         add(viewList);
         viewList.setActionCommand("view");
         viewList.addActionListener(this);
 
         JButton empty = new JButton("Empty Todolist");
-        empty.setBounds(xPosition, 90, buttonWidth, buttonHeight );
+        empty.setBounds(xPosition, 80, buttonWidth, buttonHeight );
         add(empty);
         empty.setActionCommand("empty");
         empty.addActionListener(this);
 
         this.currentUser = currentUser;
         JButton resetPassword = new JButton("Reset Passwords");
-        resetPassword.setBounds(xPosition, 130, buttonWidth, buttonHeight );
+        resetPassword.setBounds(xPosition, 120, buttonWidth, buttonHeight );
         add(resetPassword);
         resetPassword.setActionCommand("resetPassword");
         resetPassword.addActionListener(this);
 
 
         JButton newUser = new JButton("Add A New User to the System");
-        newUser.setBounds(xPosition, 170, buttonWidth, buttonHeight );
+        newUser.setBounds(xPosition, 160, buttonWidth, buttonHeight );
         add(newUser);
         newUser.setActionCommand("newUser");
         newUser.addActionListener(this);
 
+        JButton restart = new JButton("Restart TodoList Application");
+        restart.setBounds(xPosition, 200, buttonWidth, buttonHeight );
+        add(restart);
+        restart.setActionCommand("restart");
+        restart.addActionListener(this);
+
         JButton close = new JButton("Close TodoList Application");
-        close.setBounds(xPosition, 210, buttonWidth, buttonHeight );
+        close.setBounds(xPosition, 240, buttonWidth, buttonHeight );
         add(close);
         close.setActionCommand("close");
         close.addActionListener(this);
@@ -87,6 +93,10 @@ public class OptionWindow extends JFrame implements ActionListener {
             JOptionPane.showMessageDialog(null,"Your TodoList has been emptied!");
         }
         if(e.getActionCommand().equals("newUser")){}
+        if(e.getActionCommand().equals("restart")){
+            new LoginWindow();
+            dispose();
+        }
         if(e.getActionCommand().equals("close")){
            dispose();
         }
