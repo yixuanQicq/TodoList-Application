@@ -1,5 +1,6 @@
 package ui;
 
+import model.Exception.DateIncorrectFormatException;
 import model.Item;
 import model.TodoList;
 
@@ -44,6 +45,12 @@ public class ViewListWindow extends JFrame implements ActionListener{
             System.out.println("File does not exist, please create the file before running the program!");
         }
 
+        try {
+            todoList.checkOverDue();
+        } catch (DateIncorrectFormatException e) {
+            System.out.println("Should not happen");
+        }
+
         for (Item i: todoList.getTodoList()){
             Vector row = new Vector();
             row.add(todoList.getTodoList().indexOf(i));
@@ -66,6 +73,11 @@ public class ViewListWindow extends JFrame implements ActionListener{
         addItem.setActionCommand("add");
         addItem.addActionListener(this);
 
+        JButton resetDue = new JButton("Reset Item Due date");
+        add(resetDue);
+        resetDue.setActionCommand("resetDue");
+        resetDue.addActionListener(this);
+
 
         setTitle("TodoList");
         setLayout(new FlowLayout());
@@ -84,9 +96,7 @@ public class ViewListWindow extends JFrame implements ActionListener{
         if(e.getActionCommand().equals("remove")){
             int row = table.getSelectedRow();
             todoList.crossedOffItem(row);
-
             JOptionPane.showMessageDialog(null,"Item status has been changed successfully.");
-
             String done = "Done";
             table.setValueAt((Object)done,row,4);
             try {
@@ -94,6 +104,13 @@ public class ViewListWindow extends JFrame implements ActionListener{
             } catch (IOException excp) {
                 System.out.println("This should never happen, I know this file exists");
             }
+        }
+        if(e.getActionCommand().equals("resetDue")){
+            int row = table.getSelectedRow();
+            Item item = todoList.getItem(row -1);
+            new ResetDueWindow(item, this);
+
+
         }
     }
 

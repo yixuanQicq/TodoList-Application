@@ -29,30 +29,17 @@ public class OptionWindow extends JFrame implements ActionListener {
         optionMessage.setBounds(26, 10, 300, 20);
         add(optionMessage);
 
-        JButton viewList = new JButton("View Current Todo-list");
-        viewList.setBounds(xPosition, 40, buttonWidth, buttonHeight );
+        JButton viewList = new JButton("View Current Todolist");
+        viewList.setBounds(xPosition, 50, buttonWidth, buttonHeight );
         add(viewList);
         viewList.setActionCommand("view");
         viewList.addActionListener(this);
 
-//        JButton addItem = new JButton("Add a Todo-list Item");
-//        addItem.setBounds(xPosition, 70, buttonWidth, buttonHeight );
-//        add(addItem);
-//        addItem.setActionCommand("AddItem");
-//        addItem.addActionListener(this);
-
-
-        JButton viewOverDue = new JButton("View Overdues");
-        viewOverDue.setBounds(xPosition, 70, buttonWidth, buttonHeight );
-        add(viewOverDue);
-        viewOverDue.setActionCommand("viewOver");
-        viewOverDue.addActionListener(this);
-
-        JButton resetDue = new JButton("Reset Item Due Dates");
-        resetDue.setBounds(xPosition, 100, buttonWidth, buttonHeight );
-        add(resetDue);
-        resetDue.setActionCommand("resetDue");
-        resetDue.addActionListener(this);
+        JButton empty = new JButton("Empty Todolist");
+        empty.setBounds(xPosition, 90, buttonWidth, buttonHeight );
+        add(empty);
+        empty.setActionCommand("empty");
+        empty.addActionListener(this);
 
         this.currentUser = currentUser;
         JButton resetPassword = new JButton("Reset Passwords");
@@ -61,20 +48,15 @@ public class OptionWindow extends JFrame implements ActionListener {
         resetPassword.setActionCommand("resetPassword");
         resetPassword.addActionListener(this);
 
-        JButton empty = new JButton("Empty Todolist");
-        empty.setBounds(xPosition, 160, buttonWidth, buttonHeight );
-        add(empty);
-        empty.setActionCommand("empty");
-        empty.addActionListener(this);
 
         JButton newUser = new JButton("Add A New User to the System");
-        newUser.setBounds(xPosition, 190, buttonWidth, buttonHeight );
+        newUser.setBounds(xPosition, 170, buttonWidth, buttonHeight );
         add(newUser);
         newUser.setActionCommand("newUser");
         newUser.addActionListener(this);
 
         JButton close = new JButton("Close TodoList Application");
-        close.setBounds(xPosition, 220, buttonWidth, buttonHeight );
+        close.setBounds(xPosition, 210, buttonWidth, buttonHeight );
         add(close);
         close.setActionCommand("close");
         close.addActionListener(this);
@@ -91,13 +73,19 @@ public class OptionWindow extends JFrame implements ActionListener {
         if(e.getActionCommand().equals("view")){
             new ViewListWindow();
         }
-        if(e.getActionCommand().equals("viewOver")){}
-        if(e.getActionCommand().equals("resetDue")){}
         if(e.getActionCommand().equals("resetPassword")){}
-        if(e.getActionCommand().equals("empty")){}
+        if(e.getActionCommand().equals("empty")){
+            TodoList todoList = new TodoList();
+                try {
+                    todoList.emptyFile("src/savefile.txt");
+                } catch (IOException ex) {
+                    System.out.println("This should never happen, I know this file exists");
+                }
+            JOptionPane.showMessageDialog(null,"Your TodoList has been emptied!");
+        }
         if(e.getActionCommand().equals("newUser")){}
         if(e.getActionCommand().equals("close")){
-            dispose();
+           dispose();
         }
     }
 }

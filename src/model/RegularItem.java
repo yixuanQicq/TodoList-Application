@@ -1,8 +1,10 @@
 package model;
 
 
+import java.text.ParseException;
+
 public class RegularItem extends Item{
-    public RegularItem(String name, String dueDate) {
+    public RegularItem(String name, String dueDate) throws ParseException {
         super(name, dueDate);
     }
 

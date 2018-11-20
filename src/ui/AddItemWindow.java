@@ -12,6 +12,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.text.ParseException;
 
 public class AddItemWindow extends JFrame implements ActionListener{
 
@@ -85,11 +86,14 @@ public class AddItemWindow extends JFrame implements ActionListener{
         String t = itemText.getText();
         String due = itemDueDate.getText();
         if(e.getActionCommand().equals("Urgent")){
-            Item item = new UrgentItem(t,due);
             try {
+                Item item = new UrgentItem(t,due);
                 todoList.addItem(item);
                 JOptionPane.showMessageDialog(null,"Your Item has been successfully added.");
-            } catch (TodoListException ex) {
+            } catch (ParseException pe){
+                JOptionPane.showMessageDialog(null,"Incorrect date format, try again later");
+            }
+            catch (TodoListException ex) {
                 JOptionPane.showMessageDialog(null,"Item over limit, try again later");
             }
             try {
@@ -99,11 +103,14 @@ public class AddItemWindow extends JFrame implements ActionListener{
             }
         }
         if(e.getActionCommand().equals("Regular")){
-            Item item = new RegularItem(t,due);
             try {
+                Item item = new RegularItem(t, due);
                 todoList.addItem(item);
                 JOptionPane.showMessageDialog(null,"Your Item has been successfully added.");
-            } catch (TodoListException ex) {
+            } catch (ParseException pe){
+                JOptionPane.showMessageDialog(null,"Incorrect date format, try again later");
+            }
+            catch (TodoListException ex) {
                 JOptionPane.showMessageDialog(null,"Item over limit, try again later");
             }
             try {
@@ -113,11 +120,14 @@ public class AddItemWindow extends JFrame implements ActionListener{
             }
         }
         if(e.getActionCommand().equals("Business")){
-            Item item = new BusinessItem(t,due);
             try {
+                Item item = new BusinessItem(t,due);
                 todoList.addItem(item);
                 JOptionPane.showMessageDialog(null,"Your Item has been successfully added.");
-            } catch (TodoListException ex) {
+            } catch (ParseException pe){
+                JOptionPane.showMessageDialog(null,"Incorrect date format, try again later");
+            }
+            catch (TodoListException ex) {
                 JOptionPane.showMessageDialog(null,"Item over limit, try again later");
             }
             try {

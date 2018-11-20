@@ -1,16 +1,25 @@
 package model;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public abstract class Item {
     protected String name;
     protected String status;
     protected String dueDate;
     protected String type;
+    protected Date due;
 
-    Item(String name, String dueDate){
+    Item(String name, String dueDate) throws ParseException {
         this.name = name;
         this.dueDate = dueDate;
         status = "In-progress";
         this.type = getItemType();
+        DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
+        due = format.parse(getDueDate());
     }
 
     Item(String name, String status, String dueDate){
@@ -52,6 +61,10 @@ public abstract class Item {
     // EFFECTS: change the status of the item
     public void setDueDate(String dueDate) {
         this.dueDate = dueDate;
+    }
+
+    public Date getDue(){
+        return due;
     }
 
     // EFFECTS: return item type as string

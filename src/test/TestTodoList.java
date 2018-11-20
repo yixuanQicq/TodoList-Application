@@ -29,7 +29,7 @@ public class TestTodoList {
     private String testName2;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws ParseException {
         testTodoList = new TodoList();
         DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
         testDate1 = "JUNE 8, 2017";

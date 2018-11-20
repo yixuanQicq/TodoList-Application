@@ -1,7 +1,9 @@
 package model;
 
+import java.text.ParseException;
+
 public class UrgentItem extends Item {
-    public UrgentItem(String name, String dueDate) {
+    public UrgentItem(String name, String dueDate) throws ParseException {
         super(name, dueDate);
     }
 

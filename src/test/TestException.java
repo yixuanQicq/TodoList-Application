@@ -6,6 +6,8 @@ import model.Exception.TooManyUrgentItemException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.text.ParseException;
+
 import static junit.framework.TestCase.fail;
 
 public class TestException {
@@ -15,7 +17,7 @@ public class TestException {
     TodoList testTodoList;
 
     @BeforeEach
-    void setUp(){
+    void setUp() throws ParseException {
        regularItem = new RegularItem("regularItem", "OCOTOBER 20, 2018");
        businessItem = new BusinessItem("businessItem", "OCTOBER 20, 2018");
        urgentItem = new UrgentItem("urgentItem", "OCTOBER 20, 2018");

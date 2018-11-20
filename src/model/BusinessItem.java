@@ -1,8 +1,10 @@
 package model;
 
+import java.text.ParseException;
+
 public class BusinessItem extends Item{
 
-    public BusinessItem(String name, String dueDate) {
+    public BusinessItem(String name, String dueDate) throws ParseException {
         super(name, dueDate);
     }
 
