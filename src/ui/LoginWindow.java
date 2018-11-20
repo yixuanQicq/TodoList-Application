@@ -1,5 +1,7 @@
 package ui;
 
+import model.Password;
+import model.User;
 import model.UserSystem;
 
 import javax.swing.*;
@@ -69,7 +71,7 @@ public class LoginWindow extends JFrame implements ActionListener {
             Boolean run = userSystem.accessVerification(pw, nm);
             if (run){
                 this.dispose();
-                new OptionWindow();
+                new OptionWindow(new User(nm, new Password(pw)));
             }
             else{
                 JOptionPane.showMessageDialog(null,"Invalid username or password");
