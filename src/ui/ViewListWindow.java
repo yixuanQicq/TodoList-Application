@@ -4,17 +4,11 @@ import model.Item;
 import model.TodoList;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Vector;
 
 public class ViewListWindow extends JFrame implements ActionListener{
@@ -84,6 +78,9 @@ public class ViewListWindow extends JFrame implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if(e.getActionCommand().equals("add")){
+            new AddItemWindow(this);
+        }
         if(e.getActionCommand().equals("remove")){
             int row = table.getSelectedRow();
             todoList.crossedOffItem(row);
