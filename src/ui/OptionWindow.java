@@ -92,7 +92,9 @@ public class OptionWindow extends JFrame implements ActionListener {
                 }
             JOptionPane.showMessageDialog(null,"Your TodoList has been emptied!");
         }
-        if(e.getActionCommand().equals("newUser")){}
+        if(e.getActionCommand().equals("newUser")){
+            new AddNewUserWindow();
+        }
         if(e.getActionCommand().equals("restart")){
             new LoginWindow();
             dispose();
