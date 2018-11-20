@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Subject {
+public abstract class Subject {
     private List<Observer> observers;
 
     public Subject(){
@@ -14,9 +14,6 @@ public class Subject {
         observers.add(o);
     }
 
-    public void removeobserver(Observer o){
-        observers.remove(o);
-    }
 
     public void notifyObservers(Item i){
         for(Observer o: observers){
