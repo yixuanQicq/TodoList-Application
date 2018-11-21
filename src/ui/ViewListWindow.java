@@ -28,7 +28,7 @@ public class ViewListWindow extends JFrame implements ActionListener{
             @Override
             public boolean isCellEditable(int row, int column)
             {
-                return column == 4;
+                return column==4;
             }
             @Override
             public Class<?> getColumnClass(int columnIndex)
@@ -95,7 +95,7 @@ public class ViewListWindow extends JFrame implements ActionListener{
         }
         if(e.getActionCommand().equals("remove")){
             int row = table.getSelectedRow();
-            todoList.crossedOffItem(row+1);
+            todoList.crossedOffItem(row);
             JOptionPane.showMessageDialog(null,"Item status has been changed successfully.");
             String done = "Done";
             table.setValueAt((Object)done,row,4);
@@ -104,6 +104,8 @@ public class ViewListWindow extends JFrame implements ActionListener{
             } catch (IOException excp) {
                 System.out.println("This should never happen, I know this file exists");
             }
+            new ViewListWindow();
+            dispose();
         }
         if(e.getActionCommand().equals("resetDue")){
             int row = table.getSelectedRow();
