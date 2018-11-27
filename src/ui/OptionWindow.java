@@ -4,6 +4,9 @@ import model.TodoList;
 import model.User;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
@@ -13,6 +16,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 public class OptionWindow extends JFrame implements ActionListener {
     private int xPosition = 100;
@@ -89,6 +93,18 @@ public class OptionWindow extends JFrame implements ActionListener {
         close.addActionListener(this);
         close.setBorder(new RoundedBorder(10));
         close.setForeground(Color.white);
+
+        try {
+            // Open an audio input stream.
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(new File("src/ui/music.wav"));
+            // Get a sound clip resource.
+            Clip clip = AudioSystem.getClip();
+            // Open audio clip and load samples from the audio input stream.
+            clip.open(audioIn);
+            clip.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         pack();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
