@@ -1,6 +1,5 @@
 package ui;
 
-import model.Item;
 import model.TodoList;
 import model.User;
 
