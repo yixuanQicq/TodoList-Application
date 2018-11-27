@@ -4,11 +4,14 @@ import model.Exception.DateIncorrectFormatException;
 import model.Item;
 import model.TodoList;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.Vector;
 
@@ -18,6 +21,12 @@ public class ViewListWindow extends JFrame implements ActionListener{
     TodoList todoList;
 
     public ViewListWindow(){
+        try {
+            BufferedImage myImage = ImageIO.read(new File("src/ui/images/1.jpg"));
+            setContentPane(new ImagePanel(myImage));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         String[] columns = new String[] {
                 "Item Index", "Type", "Name","Due Date", "Status"
         };
@@ -67,16 +76,22 @@ public class ViewListWindow extends JFrame implements ActionListener{
         add(removeSelectedItem);
         removeSelectedItem.setActionCommand("remove");
         removeSelectedItem.addActionListener(this);
+        removeSelectedItem.setBorder(new OptionWindow.RoundedBorder(10));
+        removeSelectedItem.setForeground(Color.darkGray);
 
         JButton addItem = new JButton("Add a New Item");
         add(addItem);
         addItem.setActionCommand("add");
         addItem.addActionListener(this);
+        addItem.setBorder(new OptionWindow.RoundedBorder(10));
+        addItem.setForeground(Color.darkGray);
 
         JButton resetDue = new JButton("Reset Item Due date");
         add(resetDue);
         resetDue.setActionCommand("resetDue");
         resetDue.addActionListener(this);
+        resetDue.setBorder(new OptionWindow.RoundedBorder(10));
+        resetDue.setForeground(Color.darkGray);
 
 
         setTitle("TodoList");

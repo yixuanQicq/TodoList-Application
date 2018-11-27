@@ -3,11 +3,14 @@ package ui;
 import model.Item;
 import model.TodoList;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -29,16 +32,22 @@ public class ResetDueWindow extends JFrame implements ActionListener {
         setDefaultCloseOperation(HIDE_ON_CLOSE);
         setPreferredSize(new Dimension(500, 300));
         ((JPanel) getContentPane()).setBorder(new EmptyBorder(13, 13, 13, 13) );
-        setLayout(new FlowLayout());
+        setLayout(null);
 
         JLabel enterDate = new JLabel("Please enter new due date for item selected.");
         add(enterDate);
+        enterDate.setBounds(100, 30, 300, 20);
 
         dateEntered = new JTextField(20);
         add(dateEntered);
+        dateEntered.setBounds(175,80,150,20);
 
         JButton btn = new JButton("Enter");
         add(btn);
+        btn.setBounds(210, 150,80,20);
+        btn.setBorder(new OptionWindow.RoundedBorder(10));
+        btn.setForeground(Color.BLACK);
+
 
         btn.setActionCommand("Enter");
         btn.addActionListener(this);

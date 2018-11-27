@@ -2,11 +2,14 @@ package ui;
 
 import model.UserSystem;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 
 public class AddNewUserWindow extends JFrame implements ActionListener{
@@ -21,13 +24,16 @@ public class AddNewUserWindow extends JFrame implements ActionListener{
         ((JPanel) getContentPane()).setBorder(new EmptyBorder(13, 13, 13, 13) );
         setLayout(null);
 
+
         JLabel welcome = new JLabel("Create a New User: ");
         welcome.setBounds(55,40, 300,20);
         add(welcome);
+        welcome.setForeground(Color.DARK_GRAY);
 
         JLabel enterYourUsername = new JLabel("Please enter new username", JLabel.CENTER);
         enterYourUsername.setBounds(40,70, 200,20);
         add(enterYourUsername);
+        enterYourUsername.setForeground(Color.DARK_GRAY);
 
         username = new JTextField(10);
         username.setBounds(50,100, 100,20);
@@ -36,6 +42,7 @@ public class AddNewUserWindow extends JFrame implements ActionListener{
         JLabel enterYourPassword = new JLabel("Please enter new password", JLabel.CENTER);
         enterYourPassword.setBounds(40,150, 200,20);
         add(enterYourPassword);
+        enterYourPassword.setForeground(Color.DARK_GRAY);
 
         userpassword = new JTextField();
         userpassword.setBounds(50,180, 100,20);
@@ -47,6 +54,8 @@ public class AddNewUserWindow extends JFrame implements ActionListener{
 
         btn.setActionCommand("Enter");
         btn.addActionListener(this);
+        btn.setBorder(new OptionWindow.RoundedBorder(10));
+        btn.setForeground(Color.darkGray);
 
         pack();
         setLocationRelativeTo(null);

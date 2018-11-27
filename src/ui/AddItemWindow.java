@@ -6,11 +6,14 @@ import model.Exception.TodoListException;
 import model.Exception.TooManyThingsException;
 import model.Exception.TooManyUrgentItemException;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 
@@ -31,6 +34,7 @@ public class AddItemWindow extends JFrame implements ActionListener{
         JLabel enterText = new JLabel("Enter the Item Text: ");
         enterText.setBounds(48, 40, 400, 20);
         add(enterText);
+        enterText.setForeground(Color.darkGray);
 
         itemText = new JTextField(30);
         itemText.setBounds(50, 70, 300, 20);
@@ -40,6 +44,7 @@ public class AddItemWindow extends JFrame implements ActionListener{
                 "(Please Follow the Format of [MMMM d, yyyy]): ");
         enterDueDate.setBounds(50, 100, 600, 20);
         add(enterDueDate);
+        enterDueDate.setForeground(Color.darkGray);
 
         itemDueDate = new JTextField(30);
         itemDueDate.setBounds(50, 130,300,20);
@@ -48,18 +53,23 @@ public class AddItemWindow extends JFrame implements ActionListener{
         JLabel typeSelection = new JLabel("Please select the type of Item you wish to create: ");
         typeSelection.setBounds(48, 160, 600, 20);
         add(typeSelection);
+        typeSelection.setForeground(Color.darkGray);
 
         JButton urgentItem = new JButton("Urgent");
         urgentItem.setBounds(70, 210, 100, 20);
         add(urgentItem);
         urgentItem.setActionCommand("Urgent");
         urgentItem.addActionListener(this);
+        urgentItem.setBorder(new OptionWindow.RoundedBorder(10));
+        urgentItem.setForeground(Color.darkGray);
 
         JButton regularItem = new JButton("Regular");
         regularItem.setBounds(190, 210,100,20);
         add(regularItem);
         regularItem.setActionCommand("Regular");
         regularItem.addActionListener(this);
+        regularItem.setBorder(new OptionWindow.RoundedBorder(10));
+        regularItem.setForeground(Color.darkGray);
 
 
         JButton businessItem = new JButton("Business");
@@ -67,6 +77,8 @@ public class AddItemWindow extends JFrame implements ActionListener{
         add(businessItem);
         businessItem.setActionCommand("Business");
         businessItem.addActionListener(this);
+        businessItem.setBorder(new OptionWindow.RoundedBorder(10));
+        businessItem.setForeground(Color.darkGray);
 
         pack();
         setLocationRelativeTo(null);
