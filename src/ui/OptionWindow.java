@@ -22,7 +22,7 @@ public class OptionWindow extends JFrame implements ActionListener {
     private int xPosition = 100;
     private int buttonWidth = 300;
     private int buttonHeight = 20;
-
+    Clip clip;
     private User currentUser;
 
 
@@ -98,7 +98,7 @@ public class OptionWindow extends JFrame implements ActionListener {
             // Open an audio input stream.
             AudioInputStream audioIn = AudioSystem.getAudioInputStream(new File("src/ui/music.wav"));
             // Get a sound clip resource.
-            Clip clip = AudioSystem.getClip();
+            clip = AudioSystem.getClip();
             // Open audio clip and load samples from the audio input stream.
             clip.open(audioIn);
             clip.start();
@@ -134,11 +134,13 @@ public class OptionWindow extends JFrame implements ActionListener {
             new AddNewUserWindow();
         }
         if(e.getActionCommand().equals("restart")){
+            clip.close();
             new LoginWindow();
             dispose();
         }
         if(e.getActionCommand().equals("close")){
-           dispose();
+            clip.close();
+            dispose();
         }
     }
 
